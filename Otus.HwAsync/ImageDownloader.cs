@@ -7,8 +7,9 @@ namespace Otus.HwAsync
         public event Action<string, long> DonwloadCompleted;
         private string remoteUrl;
         public string fileName;
-        private string path = @"C:\Users\bondaruk\source\repos\Otus.HwAsync\";
-       public ImageDownloader(string remoteUrl, string fileName)
+        private string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
+
+        public ImageDownloader(string remoteUrl, string fileName)
         {
             this.remoteUrl = remoteUrl;
             this.fileName = fileName;
