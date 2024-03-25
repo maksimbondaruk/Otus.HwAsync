@@ -8,8 +8,6 @@ namespace Otus.HwAsync
         private readonly string remoteUrl;
         public readonly string fileName;
         private readonly string path = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-        private bool disposed = false;
-
         public ImageDownloader(string remoteUrl, string fileName)
         {
             this.remoteUrl = remoteUrl;
@@ -25,7 +23,7 @@ namespace Otus.HwAsync
             {
                 this.DonwloadStarted?.Invoke(this.fileName);
                 var _bytes = await _response.Content.ReadAsByteArrayAsync(token);
-                await File.WriteAllBytesAsync(path, _bytes);
+                await File.WriteAllBytesAsync(path, _bytes, token);
                 if (token.IsCancellationRequested)
                     token.ThrowIfCancellationRequested(); // генерируем исключение
 
@@ -39,7 +37,7 @@ namespace Otus.HwAsync
             // освобождаем неуправляемые ресурсы
             client.Dispose();
             // подавляем финализацию
-            GC.SuppressFinalize(this);
+           // GC.SuppressFinalize(this);
         }
     }
 }
